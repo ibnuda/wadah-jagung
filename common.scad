@@ -229,9 +229,9 @@ shape_of_small_case()
     lower_right_angles = [ 0, 180 ];
     lower_right_center = [ 125, -262 ];
     lower_right_radius = 121.5;
-    right_angles = [ -9.4, 9.2 ];
-    right_center = [ 9.75, -98 ];
-    right_radius = 187.5;
+    right_angles = [ -8.9, 10.3 ];
+    right_center = [ 4.5, -102.5 ];
+    right_radius = 193.55;
     difference()
     {
         union()
@@ -248,8 +248,9 @@ shape_of_small_case()
                 [ 80, -125 ],
                 [ 127, -139 ],
                 [ 143.5, -142 ],
-                [ 180.5, -153.5 ],
-                [ 194.75, -128.5 ],
+                [ 182.5, -157.5 ],
+                [ 195.5, -132.2 ],
+                [ 193.75, -68 ],
             ]);
         }
         translate(lower_right_center)
