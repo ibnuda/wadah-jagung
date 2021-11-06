@@ -1,16 +1,22 @@
 
 tenting_screw_positions = [
-    [ 54, -120 ],
-    [ 54, -75 ],
     [ 170, -57 ],
     [ 193, -147 ],
+    [ 54, -120 ],
+    [ 54, -75 ],
+];
+
+tenting_screw_small_positions = [
+    [ 170, -57 ],
+    [ 193, -147 ],
+    [ 71.5, -97.5 ],
 ];
 
 tenting_screw_rotation = [
-    30,
-    30,
     0,
     0,
+    30,
+    30,
 ];
 
 tightening_screw_positions = [
@@ -59,20 +65,22 @@ tenting_hole()
     circle(r = 3.2, $fn = 30);
 }
 
-module
-tenting_holes()
+module tenting_holes(small = false)
 {
-    for (i = [0:len(tenting_screw_positions) - 1]) {
-        translate(tenting_screw_positions[i]) linear_extrude(height = 25)
+    tenting_location =
+        small ? tenting_screw_small_positions : tenting_screw_positions;
+    for (i = [0:len(tenting_location) - 1]) {
+        translate(tenting_location[i]) linear_extrude(height = 25)
             tenting_hole();
     }
 }
 
-module
-tenting_screw_housing()
+module tenting_screw_housing(small = false)
 {
-    for (i = [0:len(tenting_screw_positions) - 1]) {
-        translate(tenting_screw_positions[i]) translate([ 0, 0, 17 ])
+    tenting_location =
+        small ? tenting_screw_small_positions : tenting_screw_positions;
+    for (i = [0:len(tenting_location) - 1]) {
+        translate(tenting_location[i]) translate([ 0, 0, 17 ])
             rotate(tenting_screw_rotation[i]) linear_extrude(height = 5.5)
                 circle(r = 6.5, $fn = 6);
     }
@@ -121,10 +129,10 @@ trrs_hole()
     ]);
 }
 
-module alpha_holes(width = 14)
+module alpha_holes(width = 14, start = 0)
 {
     for (j = [0:2]) {
-        for (i = [0:len(stagger) - 1]) {
+        for (i = [start:len(stagger) - 1]) {
             translate([ (70 + i * 19), (stagger[i] - j * 19), 0 ])
             {
                 square(size = [ width, width ], center = true);
@@ -161,6 +169,26 @@ module thumb_holes(width = 14, long_thumb = 14)
     }
 }
 
+integrated_tenting_screw_positions = [
+    [ 16.3, -23.5 ],
+    [ 16.3, -153 ],
+    [ 88, -154 ],
+    [ 140.5, -101 ],
+    [ 140, -18.1 ],
+];
+
+module
+shape_of_pcb()
+{
+    import("shape-of-pcb.dxf");
+}
+
+module
+shape_of_small_pcb()
+{
+    import("shape-of-small-pcb.dxf");
+}
+
 module
 shape_of_case()
 {
@@ -186,16 +214,47 @@ shape_of_case()
     }
 }
 
-integrated_tenting_screw_positions = [
-    [ 16.3, -23.5 ],
-    [ 16.3, -153 ],
-    [ 88, -154 ],
-    [ 140.5, -101 ],
-    [ 140, -18.1 ],
-];
-
 module
-shape_of_pcb()
+shape_of_small_case()
 {
-    import("shape-of-pcb.dxf");
+    top_angles = [ 59, 120.3 ];
+    top_center = [ 136.5, -164.5 ];
+    top_radius = 112.6;
+    left_angles = [ 165.4, 194.5 ];
+    left_center = [ 190, -96 ];
+    left_radius = 113.9;
+    lower_left_angles = [ 0, 180 ];
+    lower_left_center = [ 80, -210 ];
+    lower_left_radius = 85.42;
+    lower_right_angles = [ 0, 180 ];
+    lower_right_center = [ 125, -262 ];
+    lower_right_radius = 121.5;
+    right_angles = [ -9.4, 9.2 ];
+    right_center = [ 9.75, -98 ];
+    right_radius = 187.5;
+    difference()
+    {
+        union()
+        {
+            translate(top_center) sector(top_radius, top_angles);
+            translate(left_center) sector(left_radius, left_angles);
+            difference()
+            {
+                translate(right_center) sector(right_radius, right_angles);
+                square(size = [ 300, 300 ], center = true);
+            }
+            polygon(points = [
+                [ 80, -68 ],
+                [ 80, -125 ],
+                [ 127, -139 ],
+                [ 143.5, -142 ],
+                [ 180.5, -153.5 ],
+                [ 194.75, -128.5 ],
+            ]);
+        }
+        translate(lower_right_center)
+            sector(lower_right_radius, lower_right_angles);
+        translate(lower_left_center)
+            sector(lower_left_radius, lower_left_angles);
+    }
 }
