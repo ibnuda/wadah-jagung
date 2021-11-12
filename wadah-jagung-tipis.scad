@@ -40,8 +40,8 @@ module case ()
             shape_of_pcb();
         translate([ 0, 0, 7 ]) linear_extrude(height = 14) alpha_holes();
         translate([ 0, 0, 7 ]) linear_extrude(height = 14) thumb_holes();
-        translate([ 0, 0, 7 ]) linear_extrude(height = 7) promicro_space();
-        translate([ 0, 0, 7 ]) linear_extrude(height = 7) trrs_hole();
+        translate([ 0, 0, 3 ]) linear_extrude(height = 11) promicro_space();
+        translate([ 0, 0, 3 ]) linear_extrude(height = 11) trrs_hole();
         translate([ 0, 0, 7 ]) linear_extrude(height = 15) lcd_hole();
         translate([ 0, 0, 12 ]) linear_extrude(height = 14) alpha_holes(19.5);
         translate([ 0, 0, 12 ]) linear_extrude(height = 14)
@@ -52,13 +52,13 @@ module case ()
 intersection()
 {
     case();
-    cube(size=[500, 500, 14], center=true);
+    // cube(size=[500, 500, 14], center=true);
 }
 
-        // translate([0, 150, 0])
-        // difference()
-        // {
-        //     case();
-        //     cube(size=[500, 500, 14], center=true);
+translate([0, 150, 0])
+difference()
+{
+    case();
+    cube(size=[500, 500, 14], center=true);
 
-        // }
+}

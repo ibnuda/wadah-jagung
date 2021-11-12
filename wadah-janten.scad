@@ -21,8 +21,8 @@ module case ()
             shape_of_small_pcb();
         translate([ 0, 0, 7 ]) linear_extrude(height = 14) alpha_holes(14, 1);
         translate([ 0, 0, 7 ]) linear_extrude(height = 14) thumb_holes();
-        translate([ 0, 0, 7 ]) linear_extrude(height = 7) promicro_space();
-        translate([ 0, 0, 7 ]) linear_extrude(height = 7) trrs_hole();
+        translate([ 0, 0, 3 ]) linear_extrude(height = 11) promicro_space();
+        translate([ 0, 0, 3 ]) linear_extrude(height = 11) trrs_hole();
         translate([ 0, 0, 7 ]) linear_extrude(height = 15) lcd_hole();
         translate([ 0, 0, 12 ]) linear_extrude(height = 14)
             alpha_holes(19.5, 1);
